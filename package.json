@@ -4,6 +4,7 @@
 	"description": "Helper commands for the Percy Framework",
 	"version": "0.0.4",
 	"homepage": "https://github.com/felipebueno/percy-code",
+	"publisher": "felipebueno",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/felipebueno/percy-code.git"
