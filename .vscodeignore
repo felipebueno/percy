@@ -1,0 +1,8 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+jsconfig.json
+vsc-extension-quickstart.md
+.tool-versions
+yarn-error.log
+package-lock.json

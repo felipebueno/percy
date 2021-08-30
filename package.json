@@ -1,0 +1,59 @@
+{
+  "name": "percy-code",
+  "displayName": "Percy",
+  "version": "0.0.1",
+  "description": "Helper commands for the Percy Framework",
+  "main": "./extension",
+  "homepage": "https://github.com/felipebueno/percy-code",
+  "publisher": "felipebueno",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felipebueno/percy-code.git"
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "vscode": "^1.22.0"
+  },
+  "activationEvents": [
+    "onCommand:extension.goToSCSS"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.switchStyleComponent",
+        "title": "Percy: Switch Style/Component"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.switchStyleComponent",
+        "key": "alt+o",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "keywords": [
+    "scss",
+    "css",
+    "sass",
+    "less",
+    "switch",
+    "component",
+    "percy",
+    "framework"
+  ],
+  "author": {
+    "name": "Felipe Bueno",
+    "email": "bueno.felipe@gmail.com",
+    "url": "https://bueno.dev"
+  },
+  "icon": "assets/icon.png",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^16.0.3",
+    "vscode": "^1.1.37"
+  }
+}
