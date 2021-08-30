@@ -18,7 +18,7 @@
     "vscode": "^1.22.0"
   },
   "activationEvents": [
-    "onCommand:extension.goToSCSS"
+    "onCommand:extension.switchStyleComponent"
   ],
   "contributes": {
     "commands": [
@@ -30,7 +30,7 @@
     "keybindings": [
       {
         "command": "extension.switchStyleComponent",
-        "key": "alt+o",
+        "key": "Alt+u",
         "when": "editorTextFocus"
       }
     ]
