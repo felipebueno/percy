@@ -18,20 +18,38 @@
     "vscode": "^1.22.0"
   },
   "activationEvents": [
-    "onCommand:extension.switchStyleComponent"
+    "onCommand:extension.switchStyleComponent",
+    "onCommand:extension.newComponent",
+    "onCommand:extension.newPage"
   ],
   "contributes": {
     "commands": [
       {
         "command": "extension.switchStyleComponent",
         "title": "Percy: Switch Style/Component"
+      },
+      {
+        "command": "extension.newComponent",
+        "title": "Percy: New Component"
+      },
+      {
+        "command": "extension.newPage",
+        "title": "Percy: New Page"
       }
     ],
     "keybindings": [
       {
         "command": "extension.switchStyleComponent",
-        "key": "Alt+u",
+        "key": "Alt+u o",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.newComponent",
+        "key": "Alt+u c"
+      },
+      {
+        "command": "extension.newPage",
+        "key": "Alt+u p"
       }
     ]
   },
