@@ -1,7 +1,7 @@
 {
   "name": "percy-code",
   "displayName": "Percy",
-  "version": "0.0.1+1",
+  "version": "0.0.2",
   "description": "Helper commands for the Percy Framework",
   "main": "./extension",
   "homepage": "https://github.com/felipebueno/percy-code",
