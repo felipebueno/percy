@@ -1,4 +1,4 @@
-# Go to CSS
+# Percy Code
 
 This extension allows you to switch between your code and its stylesheet, create pages and components for the Percy Framework (closed beta).
 
