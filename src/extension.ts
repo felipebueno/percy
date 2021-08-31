@@ -61,10 +61,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	const disposable0 = vscode.commands.registerCommand(GO_TO_SCSS_COMMAND, () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage(GO_TO_SCSS_COMMAND);
-
 		if (!vscode.workspace.name) {
 			return;
 		}
@@ -102,12 +98,33 @@ export function activate(context: vscode.ExtensionContext) {
 				filenameWithoutExtension
 			);
 
-
 			if (suffixToOpen.length > 0) {
 				openTextEditor(suffixToOpen[0]);
 			} else {
 				const fileToOpen = `**${lastPath}${filenameWithoutExtension}${filenameExtension}`;
 				openFile(fileToOpen);
+				vscode.window.showInformationMessage(`The style file ${filenameWithoutExtension}.css does not exist. Would you like to create it?`, 'Yes', 'No')
+					.then((res) => {
+						console.log(res);
+						if (res === 'Yes') {
+							const writeStr = `${filenameWithoutExtension} {}`;
+							const writeData = Buffer.from(writeStr, 'utf8');
+							vscode.workspace.fs.writeFile(vscode.Uri.file(path + filenameWithoutExtension + '.css'), writeData)
+								.then((_res) => {
+									const suffixToOpen = fetchFile(
+										styleExtensions,
+										path,
+										filenameWithoutExtension
+									);
+
+									if (suffixToOpen.length > 0) {
+										openTextEditor(suffixToOpen[0]);
+									} else {
+										vscode.window.showInformationMessage('File not found :(');
+									}
+								});
+						}
+					});
 			}
 		} else {
 			const fileToOpen = fetchFile(
@@ -118,6 +135,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 			if (fileToOpen.length > 0) {
 				openTextEditor(fileToOpen[0]);
+			} else {
+				vscode.window.showInformationMessage(NEW_COMPONENT_COMMAND);
 			}
 		}
 	});
