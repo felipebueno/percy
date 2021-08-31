@@ -2,7 +2,7 @@
 	"name": "percy-code",
 	"displayName": "Percy",
 	"description": "Helper commands for the Percy Framework",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"homepage": "https://github.com/felipebueno/percy-code",
 	"publisher": "felipebueno",
 	"repository": {
