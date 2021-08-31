@@ -14,7 +14,8 @@ const CSS_TYPE = ".css";
 const JS_TYPE = ".js";
 const TS_TYPE = ".ts";
 const NODE_MODULES_FOLDER = "**/node_modules/**";
-
+const cssRootPath = `${vscode.workspace.rootPath}/public/css/`;
+const tsRootPath = `${vscode.workspace.rootPath}/src/scripts/percival/`;
 
 const openTextEditor = (filename: string) => {
 	vscode.workspace
@@ -34,7 +35,7 @@ const fetchFile = (extension: any, path: string, filenameWithoutExtension: any) 
 		.filter((file: any) => fs.existsSync(file));
 };
 
-const toKebabCase = (str: string) => {
+const toKebabCase = (str: any) => {
 	return str.split('').map((letter: string, idx: number) => {
 		return letter.toUpperCase() === letter
 			? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
@@ -65,8 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		const cssRootPath = `${vscode.workspace.rootPath}/public/css/`;
-		const tsRootPath = `${vscode.workspace.rootPath}/src/scripts/percival/`;
+
 		const activeTextEditor = vscode.window.activeTextEditor;
 
 		if (!activeTextEditor) {
@@ -142,9 +142,50 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	const disposable1 = vscode.commands.registerCommand(NEW_COMPONENT_COMMAND, () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage(NEW_COMPONENT_COMMAND);
+		vscode.window.showInputBox({ placeHolder: 'ComponentName:' }).then((filename) => {
+			const tsPath = `${tsRootPath}components/`;
+			const codeExtensions = [TS_TYPE, JS_TYPE];
+
+			const writeStr = `import { PercyElement } from '../models/PercyElement.js';\n\nexport class ${filename} extends PercyElement {\n\n}\n\ncustomElements.define('${toKebabCase(filename)}', ${filename});\n`;
+			const writeData = Buffer.from(writeStr, 'utf8');
+			vscode.workspace.fs.writeFile(vscode.Uri.file(tsPath + filename + '.ts'), writeData)
+				.then((_res) => {
+					const fileToOpen = fetchFile(
+						codeExtensions,
+						tsPath,
+						filename
+					);
+
+					if (fileToOpen.length > 0) {
+						openTextEditor(fileToOpen[0]);
+
+						// START Create CSS
+						const cssPath = `${cssRootPath}components/`;
+						const styleExtensions = [SCSS_TYPE, SASS_TYPE, CSS_TYPE];
+						const file = toKebabCase(filename);
+
+						const writeStr = `${file} {}\n`;
+						const writeData = Buffer.from(writeStr, 'utf8');
+						vscode.workspace.fs.writeFile(vscode.Uri.file(cssPath + file + '.css'), writeData)
+							.then((_res) => {
+								const fileToOpen = fetchFile(
+									styleExtensions,
+									cssPath,
+									file
+								);
+
+								if (fileToOpen.length > 0) {
+									openTextEditor(fileToOpen[0]);
+								} else {
+									vscode.window.showInformationMessage(`${file} style was not found :(`);
+								}
+							});
+						// END Create CSS
+					} else {
+						vscode.window.showInformationMessage(`${filename} component was not found :(`);
+					}
+				});
+		});
 	});
 
 	const disposable2 = vscode.commands.registerCommand(NEW_PAGE_COMMAND, () => {
