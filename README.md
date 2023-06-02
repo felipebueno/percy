@@ -11,7 +11,3 @@ This extension allows you to switch between your code and its stylesheet, create
 * You can create a new component.
 
 * You can create a new page.
-
-## Using
-
-Calls `Percy: Switch Style/Component` command (alt+o).
